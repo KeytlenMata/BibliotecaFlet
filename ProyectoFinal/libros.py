@@ -9,7 +9,7 @@ Responsabilidades:
 """
 
 from datos import libros, libro_existe, guardar_datos
-
+from clientes import clientes_view
 
 def registrar_libro(titulo: str, autor: str, isbn: str) -> bool:
     """
