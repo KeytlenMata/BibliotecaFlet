@@ -8,7 +8,6 @@ class LoansView(ft.Container):
         super().__init__()
         self.padding = 30
         self.expand = True
-        # self.bgcolor = "#FFFFFF"
         
         # Inputs
         self.libro_dropdown = ft.Dropdown(
@@ -26,6 +25,16 @@ class LoansView(ft.Container):
         self.dias_input = ft.TextField(label="Días", value="7", width=100, border_color=ft.colors.OUTLINE)
         self.msg = ft.Text(size=12)
         
+        # ✅ Campo de búsqueda
+        self.search_field = ft.TextField(
+            label="Buscar préstamo",
+            hint_text="Cliente o título del libro...",
+            prefix_icon=ft.icons.SEARCH,
+            width=300,
+            on_change=self._on_search_change,
+            border_color=ft.colors.OUTLINE
+        )
+        
         self.list_view = ft.Column(spacing=10, scroll=ft.ScrollMode.AUTO, expand=True)
         
         self.content = self._build_content()
@@ -36,7 +45,6 @@ class LoansView(ft.Container):
             ft.Text("Préstamos", size=30, weight="bold", color=ft.colors.ON_BACKGROUND),
             ft.Divider(height=20, color="transparent"),
             
-            # Form
             ft.Container(
                 content=ft.Column([
                     ft.Text("Nuevo Préstamo", size=16, weight="bold", color=ft.colors.ON_SURFACE),
@@ -59,6 +67,7 @@ class LoansView(ft.Container):
             
             ft.Divider(height=30, color="transparent"),
             ft.Text("Préstamos Activos", size=16, weight="bold", color=ft.colors.ON_BACKGROUND),
+            self.search_field,  # ✅ Campo de búsqueda insertado aquí
             self.list_view
         ], expand=True)
 
@@ -69,7 +78,15 @@ class LoansView(ft.Container):
             self.msg.update()
             return
 
-        res = prestar_libro(self.libro_dropdown.value, self.cliente_dropdown.value, int(self.dias_input.value))
+        try:
+            dias = int(self.dias_input.value)
+        except ValueError:
+            self.msg.value = "Días debe ser un número."
+            self.msg.color = "red"
+            self.msg.update()
+            return
+
+        res = prestar_libro(self.libro_dropdown.value, self.cliente_dropdown.value, dias)
         if res:
             self.msg.value = "Préstamo realizado."
             self.msg.color = "green"
@@ -94,8 +111,18 @@ class LoansView(ft.Container):
             for c in clientes
         ]
 
+        # Mostrar todos los préstamos (sin filtro)
+        self._display_loans(prestamos)
+
+        if self.page:
+            self.libro_dropdown.update()
+            self.cliente_dropdown.update()
+            self.list_view.update()
+
+    def _display_loans(self, loan_list):
+        """Muestra una lista dada de préstamos (usado por _refresh_ui y _on_search_change)"""
         self.list_view.controls.clear()
-        active_loans = [p for p in prestamos if p.get("activo", True)]
+        active_loans = [p for p in loan_list if p.get("activo", True)]
         
         if not active_loans:
             self.list_view.controls.append(ft.Text("No hay préstamos activos.", color="#787774"))
@@ -114,7 +141,7 @@ class LoansView(ft.Container):
                                 ft.ElevatedButton(
                                     "Devolver", 
                                     on_click=lambda e, isbn=libro["isbn"]: self._devolver(isbn),
-                                    style=ft.ButtonStyle(color=ft.colors.ERROR, bgcolor=ft.colors.ERROR_CONTAINER)
+                                    style=ft.ButtonStyle(color=ft.colors.WHITE, bgcolor=ft.colors.RED_600)
                                 )
                             ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
                             padding=15,
@@ -122,8 +149,28 @@ class LoansView(ft.Container):
                             border_radius=5
                         )
                     )
+
+    def _on_search_change(self, e):
+        termino = e.control.value.strip().lower()
+        if not termino:
+            # Mostrar todos
+            self._display_loans(prestamos)
+        else:
+            # Filtrar por cliente o título del libro
+            filtered_loans = []
+            for p in prestamos:
+                if not p.get("activo", True):
+                    continue
+                libro = next((l for l in libros if l["isbn"] == p["codigo"]), {})
+                cliente = next((c for c in clientes if c.cedula == p["cedula"]), None)
+                if libro and cliente:
+                    # Buscar en título o nombre completo del cliente
+                    if (termino in libro["titulo"].lower() or
+                        termino in cliente.nombre.lower() or
+                        termino in cliente.apellido.lower() or
+                        termino in f"{cliente.nombre} {cliente.apellido}".lower()):
+                        filtered_loans.append(p)
+            self._display_loans(filtered_loans)
         
         if self.page:
-            self.libro_dropdown.update()
-            self.cliente_dropdown.update()
             self.list_view.update()

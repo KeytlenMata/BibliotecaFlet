@@ -1,6 +1,5 @@
 from datetime import datetime, timedelta
-from datos import prestamos, guardar_datos, libros
-from models.clientes import cliente_existe
+from datos import prestamos, guardar_datos, libros, clientes  # ✅ Añade 'clientes' aquí
 
 def libro_disponible(isbn: str) -> bool:
     for libro in libros:
@@ -15,8 +14,11 @@ def obtener_libro(isbn: str):
     return None
 
 def prestar_libro(codigo_libro: str, cedula_cliente: str, dias_prestamo: int = 7) -> bool:
-    if not cliente_existe(cedula_cliente):
+    # ✅ Valida existencia del cliente directamente (sin importar cliente_existe)
+    cliente_valido = any(c.cedula == cedula_cliente for c in clientes)
+    if not cliente_valido:
         return False
+        
     if not libro_disponible(codigo_libro):
         return False
 

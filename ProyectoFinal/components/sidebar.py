@@ -1,11 +1,11 @@
 import flet as ft
 
 class Sidebar(ft.Container):
-    def __init__(self, app, on_nav_change, on_theme_toggle):
+    def __init__(self, app, on_nav_change, on_theme_toggle=None):
         super().__init__()
         self.app = app
         self.on_nav_change = on_nav_change
-        self.on_theme_toggle = on_theme_toggle
+        # on_theme_toggle ya no se usa
         self.width = 250
         self.bgcolor = ft.colors.SURFACE_VARIANT
         self.padding = 20
@@ -17,11 +17,7 @@ class Sidebar(ft.Container):
                 self._build_nav_item("Clientes", ft.icons.PEOPLE_OUTLINE, 1),
                 self._build_nav_item("Inventario", ft.icons.BOOK_OUTLINED, 2),
                 self._build_nav_item("Préstamos", ft.icons.SWAP_HORIZ, 3),
-                ft.Divider(color="transparent", height=20),
-                ft.Row([
-                    ft.Text("Tema", color=ft.colors.ON_SURFACE_VARIANT),
-                    ft.IconButton(ft.icons.BRIGHTNESS_6, on_click=self.on_theme_toggle)
-                ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN)
+                # --- Eliminado el botón de tema ---
             ],
             spacing=5
         )

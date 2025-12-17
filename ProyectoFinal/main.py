@@ -12,10 +12,29 @@ def main(page: ft.Page):
 
     page.title = "Sistema de Biblioteca Profesional"
     page.padding = 0
-    page.theme_mode = ft.ThemeMode.LIGHT
-    page.theme = ft.Theme(color_scheme_seed="blue")
-    page.dark_theme = ft.Theme(color_scheme_seed="blue")
     
+    # === TEMA OSCURO FIJO (sin opción a claro) ===
+    page.theme_mode = ft.ThemeMode.DARK
+    
+    page.theme = ft.Theme(
+        color_scheme=ft.ColorScheme(
+            primary=ft.colors.BLUE_400,
+            secondary=ft.colors.AMBER_300,
+            error=ft.colors.RED_600,       # Botones "Devolver" usarán este color
+            surface=ft.colors.GREY_800,
+            background=ft.colors.GREY_900,
+            on_primary=ft.colors.WHITE,
+            on_secondary=ft.colors.GREY_900,
+            on_background=ft.colors.WHITE,
+            on_surface=ft.colors.WHITE70,
+            outline=ft.colors.GREY_600,
+        ),
+        font_family="Segoe UI",
+        use_material3=True
+    )
+    
+    page.bgcolor = ft.colors.GREY_900
+
     page.window_width = 1200
     page.window_height = 800
 
@@ -23,7 +42,6 @@ def main(page: ft.Page):
     content_area = ft.Container(expand=True, padding=0)
 
     def change_view(index):
-        # Re-instantiate view to ensure fresh data
         if index == 0:
             content_area.content = DashboardView()
         elif index == 1:
@@ -34,12 +52,11 @@ def main(page: ft.Page):
             content_area.content = LoansView()
         content_area.update()
 
-    def toggle_theme(e):
-        page.theme_mode = ft.ThemeMode.DARK if page.theme_mode == ft.ThemeMode.LIGHT else ft.ThemeMode.LIGHT
-        page.update()
+    # --- NO HAY toggle_theme --- #
+    # El tema siempre será oscuro
 
     # Initialize Sidebar and Layout
-    sidebar = Sidebar(page, change_view, toggle_theme)
+    sidebar = Sidebar(page, change_view, None) 
     
     page.add(
         ft.Row(
