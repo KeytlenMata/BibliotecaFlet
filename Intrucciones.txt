@@ -1,13 +1,15 @@
 
 USAR GIT BASH EN LA TERMINAL DE VSCODE
 
-Paso 1: Activar variable de entorno en .../ExamenF-GrupoA
+Paso 1: Sacar la carpeta llamada venv que está dentro de /ProyectoFinal
+
+Paso 2: Activar variable de entorno en .../ExamenF-GrupoA (o donde lo guarden)
 source venv/Scripts/activate
 
-Paso 2: Instalar librerias en .../ExamenF-GrupoA
+Paso 3: Instalar librerias en .../ExamenF-GrupoA
 python -m pip install flet==0.24.1 python-dotenv==1.0.1
 
-Paso 3: Cambiar de directorio a .../ExamenF-GrupoA/ProyectoFinal
+Paso 4: Cambiar de directorio a .../ExamenF-GrupoA/ProyectoFinal
 
-Paso 4: Correr el programa 
+Paso 5: Correr el programa 
 python main.py
