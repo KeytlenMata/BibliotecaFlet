@@ -1,0 +1,20 @@
+[
+    {
+        "titulo": "Libro de Modas",
+        "autor": "Georgina",
+        "isbn": "dsadasd",
+        "disponible": true
+    },
+    {
+        "titulo": "Biblia",
+        "autor": "Dios",
+        "isbn": "12334",
+        "disponible": false
+    },
+    {
+        "titulo": "Comidas Asiaticas",
+        "autor": "comidas",
+        "isbn": "libro para comidas",
+        "disponible": true
+    }
+]
