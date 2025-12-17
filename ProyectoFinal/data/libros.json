@@ -1,0 +1,62 @@
+[
+    {
+        "titulo": "Harry Potter",
+        "autor": "J. K. Rowling",
+        "isbn": "147-852-9630",
+        "disponible": true
+    },
+    {
+        "titulo": "La Odisea",
+        "autor": "Homero",
+        "isbn": "24589-89520475",
+        "disponible": true
+    },
+    {
+        "titulo": "La Biblia",
+        "autor": "Versión Reina Valera 1960",
+        "isbn": "101-1002-901",
+        "disponible": true
+    },
+    {
+        "titulo": "El Señor de los Anillos",
+        "autor": "J.R.R. Tolkien",
+        "isbn": "1593-8547-96315",
+        "disponible": true
+    },
+    {
+        "titulo": "Don Quijote de la Mancha",
+        "autor": "Miguel de Cervantes",
+        "isbn": "5829-9638-1403",
+        "disponible": true
+    },
+    {
+        "titulo": "Cien Años de Soledad",
+        "autor": "Gabriel García Márquez",
+        "isbn": "9587-9127-52",
+        "disponible": false
+    },
+    {
+        "titulo": "Orgullo y Prejuicio",
+        "autor": "Jane Austen",
+        "isbn": "8820-8956-6314",
+        "disponible": false
+    },
+    {
+        "titulo": "Hamlet",
+        "autor": "William Shakespeare",
+        "isbn": "7895-78958-1",
+        "disponible": false
+    },
+    {
+        "titulo": "El Principito",
+        "autor": "Antoine de Saint-Exupéry",
+        "isbn": "265983-852014",
+        "disponible": true
+    },
+    {
+        "titulo": "Alicia en el País de las Maravillas",
+        "autor": "Lewis Carroll",
+        "isbn": "10123-852-8220",
+        "disponible": true
+    }
+]

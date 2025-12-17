@@ -3,3 +3,6 @@ class Cliente:
         self.nombre = nombre
         self.apellido = apellido
         self.cedula = cedula
+
+    def __repr__(self):
+        return f"Cliente(nombre='{self.nombre}', apellido='{self.apellido}', cedula='{self.cedula}')"

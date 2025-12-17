@@ -3,7 +3,6 @@ import os
 from datetime import datetime
 
 # Archivos de persistencia
-# Archivos de persistencia
 DATA_DIR = "data"
 LIBROS_FILE = os.path.join(DATA_DIR, "libros.json")
 CLIENTES_FILE = os.path.join(DATA_DIR, "clientes.json")
